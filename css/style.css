@@ -1,0 +1,561 @@
+/* ============================================================
+   Jeffrey Ramirez — Portfolio
+   Concept: a personal ledger / financial report.
+   Ink navy + paper white + one stamped accent (ledger red).
+   ============================================================ */
+
+:root {
+  --ink: #12181f;
+  --ink-soft: #4a5361;
+  --paper: #ffffff;
+  --paper-dim: #f4f4f2;
+  --navy: #0f1b2d;
+  --navy-deep: #0a121e;
+  --rule: #d8d5cd;
+  --accent: #9e2b25;
+  --brass: #a6802e;
+
+  --serif: "Fraunces", "Georgia", serif;
+  --sans: "IBM Plex Sans", "Helvetica Neue", Arial, sans-serif;
+  --mono: "IBM Plex Mono", "Courier New", monospace;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--sans);
+  font-size: 17px;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+
+img {
+  max-width: 100%;
+}
+
+a {
+  color: var(--accent);
+  text-decoration: none;
+}
+
+a:hover,
+a:focus {
+  text-decoration: underline;
+}
+
+.wrap {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 0 28px;
+}
+
+/* ---------- Skip link (accessibility) ---------- */
+.skip-link {
+  position: absolute;
+  left: -999px;
+  top: 0;
+  background: var(--accent);
+  color: #fff;
+  padding: 10px 16px;
+  z-index: 100;
+}
+.skip-link:focus {
+  left: 12px;
+  top: 12px;
+}
+
+/* ---------- Nav ---------- */
+.site-nav {
+  position: sticky;
+  top: 0;
+  z-index: 40;
+  background: rgba(255, 255, 255, 0.92);
+  backdrop-filter: blur(6px);
+  border-bottom: 1px solid var(--rule);
+}
+
+.site-nav .wrap {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 62px;
+  max-width: 980px;
+}
+
+.monogram {
+  width: 34px;
+  height: 34px;
+  border: 1.5px solid var(--ink);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--serif);
+  font-weight: 600;
+  font-size: 14px;
+  letter-spacing: 0.5px;
+  flex: none;
+}
+
+.nav-links {
+  display: flex;
+  gap: 26px;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.nav-links li {
+  margin-right: 26px; /* fallback for browsers without flexbox gap */
+}
+
+.nav-links li:last-child {
+  margin-right: 0;
+}
+
+.nav-links a {
+  color: var(--ink);
+  font-size: 14.5px;
+  font-weight: 500;
+}
+
+.nav-links a:hover {
+  color: var(--accent);
+  text-decoration: none;
+  border-bottom: 1.5px solid var(--accent);
+}
+
+.nav-toggle {
+  display: none;
+  background: none;
+  border: 1px solid var(--ink);
+  border-radius: 3px;
+  padding: 6px 10px;
+  font-family: var(--mono);
+  font-size: 13px;
+  cursor: pointer;
+}
+
+/* ---------- Masthead ---------- */
+.masthead {
+  background: var(--navy);
+  color: #eef0f2;
+  padding: 76px 0 64px;
+  position: relative;
+  overflow: hidden;
+}
+
+.masthead::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image: radial-gradient(rgba(255, 255, 255, 0.035) 1px, transparent 1px);
+  background-size: 3px 3px;
+  pointer-events: none;
+}
+
+.masthead-meta {
+  font-family: var(--mono);
+  font-size: 12.5px;
+  letter-spacing: 1.5px;
+  color: #b9c2cf;
+  border-top: 1px solid rgba(255, 255, 255, 0.25);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.25);
+  padding: 9px 0;
+  margin-bottom: 34px;
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.masthead h1 {
+  font-family: var(--serif);
+  font-weight: 600;
+  font-size: clamp(2.6rem, 6vw, 4.4rem);
+  line-height: 1.02;
+  margin: 0 0 18px;
+  letter-spacing: -0.01em;
+}
+
+.masthead .role-line {
+  font-family: var(--serif);
+  font-style: italic;
+  font-size: 1.35rem;
+  color: #d7dbe1;
+  max-width: 620px;
+  margin: 0 0 40px;
+}
+
+.stat-strip {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0;
+  border-top: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.stat {
+  flex: 1 1 200px;
+  padding: 20px 24px 0 0;
+  border-right: 1px solid rgba(255, 255, 255, 0.15);
+}
+
+.stat:last-child {
+  border-right: none;
+}
+
+.stat .num {
+  font-family: var(--mono);
+  font-size: 1.7rem;
+  color: #fff;
+  display: block;
+}
+
+.stat .label {
+  font-size: 12.5px;
+  color: #aab3c0;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+/* ---------- Section shell ---------- */
+section {
+  padding: 68px 0;
+  border-bottom: 1px solid var(--rule);
+}
+
+section:last-of-type {
+  border-bottom: none;
+}
+
+.section-head {
+  display: flex;
+  align-items: baseline;
+  gap: 16px;
+  margin-bottom: 34px;
+}
+
+.section-num {
+  font-family: var(--mono);
+  color: var(--brass);
+  font-size: 14px;
+  margin-right: 16px; /* fallback for browsers without flexbox gap */
+}
+
+.section-head h2 {
+  font-family: var(--serif);
+  font-size: 1.9rem;
+  font-weight: 600;
+  margin: 0;
+}
+
+.section-intro {
+  max-width: 640px;
+  color: var(--ink-soft);
+  margin-bottom: 8px;
+}
+
+/* ---------- About ---------- */
+.about-body {
+  max-width: 680px;
+  font-size: 1.05rem;
+}
+
+.about-body p {
+  margin: 0 0 18px;
+}
+
+.pull {
+  font-family: var(--serif);
+  font-style: italic;
+  font-size: 1.25rem;
+  color: var(--navy);
+  border-left: 3px solid var(--accent);
+  padding-left: 20px;
+  margin: 28px 0;
+}
+
+/* ---------- Ledger rows (experience) ---------- */
+.ledger {
+  border-top: 1px solid var(--rule);
+}
+
+.ledger-entry {
+  padding: 26px 0;
+  border-bottom: 1px solid var(--rule);
+}
+
+.ledger-head {
+  display: flex;
+  align-items: baseline;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.ledger-head .title {
+  font-family: var(--serif);
+  font-weight: 600;
+  font-size: 1.2rem;
+  margin-right: 12px; /* fallback for browsers without flexbox gap */
+}
+
+.ledger-leader {
+  flex: 1 1 40px;
+  border-bottom: 1px dotted var(--rule);
+  height: 0;
+  min-width: 24px;
+  transform: translateY(-5px);
+}
+
+.ledger-head .dates {
+  font-family: var(--mono);
+  font-size: 13px;
+  color: var(--ink-soft);
+  white-space: nowrap;
+}
+
+.ledger-org {
+  font-style: italic;
+  color: var(--ink-soft);
+  margin: 3px 0 12px;
+  font-size: 0.97rem;
+}
+
+.ledger-entry ul {
+  margin: 0;
+  padding-left: 20px;
+}
+
+.ledger-entry li {
+  margin-bottom: 7px;
+}
+
+/* ---------- Research / project cards ---------- */
+.research-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 30px;
+}
+
+.research-item {
+  border: 1px solid var(--rule);
+  padding: 26px;
+  background: var(--paper-dim);
+}
+
+.research-item .tag {
+  font-family: var(--mono);
+  font-size: 11.5px;
+  color: var(--accent);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.research-item h3 {
+  font-family: var(--serif);
+  font-size: 1.25rem;
+  margin: 8px 0 4px;
+}
+
+.research-item .dates {
+  font-family: var(--mono);
+  font-size: 12.5px;
+  color: var(--ink-soft);
+  margin-bottom: 14px;
+  display: block;
+}
+
+.research-item ul {
+  padding-left: 18px;
+  margin: 0;
+  font-size: 0.96rem;
+}
+
+.research-item li {
+  margin-bottom: 6px;
+}
+
+/* ---------- Skills ---------- */
+.skills-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.skills-table tr {
+  border-top: 1px solid var(--rule);
+}
+
+.skills-table tr:last-child {
+  border-bottom: 1px solid var(--rule);
+}
+
+.skills-table th,
+.skills-table td {
+  text-align: left;
+  padding: 14px 10px;
+  vertical-align: top;
+}
+
+.skills-table th {
+  font-family: var(--mono);
+  font-weight: 500;
+  font-size: 12.5px;
+  color: var(--brass);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  width: 190px;
+}
+
+/* ---------- Education ---------- */
+.edu-block .degree {
+  font-family: var(--serif);
+  font-weight: 600;
+  font-size: 1.25rem;
+}
+
+.edu-block .school {
+  color: var(--ink-soft);
+  font-style: italic;
+  margin: 4px 0 0;
+}
+
+/* ---------- Resume CTA ---------- */
+.resume-cta {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 18px;
+  background: var(--navy);
+  color: #fff;
+  padding: 34px 36px;
+}
+
+.resume-cta > div {
+  margin-right: 18px; /* fallback for browsers without flexbox gap */
+  margin-bottom: 4px;
+}
+
+.resume-cta h2 {
+  font-family: var(--serif);
+  font-size: 1.5rem;
+  margin: 0 0 6px;
+}
+
+.resume-cta p {
+  margin: 0;
+  color: #c6ccd4;
+  font-size: 0.95rem;
+}
+
+.btn-stamp {
+  font-family: var(--mono);
+  font-size: 13.5px;
+  letter-spacing: 0.5px;
+  color: var(--navy);
+  background: #fff;
+  border: 1.5px solid #fff;
+  padding: 13px 24px;
+  white-space: nowrap;
+  transition: background 0.15s ease, color 0.15s ease;
+}
+
+.btn-stamp:hover,
+.btn-stamp:focus {
+  background: var(--navy);
+  color: #fff;
+  border-color: #fff;
+  text-decoration: none;
+}
+
+/* ---------- Footer ---------- */
+footer {
+  padding: 30px 0 50px;
+  font-family: var(--mono);
+  font-size: 12.5px;
+  color: var(--ink-soft);
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+/* ---------- Reveal-on-load (single orchestrated moment) ---------- */
+.masthead h1,
+.masthead .role-line,
+.masthead .stat-strip {
+  opacity: 0;
+  transform: translateY(14px);
+  animation: rise 0.7s ease forwards;
+}
+.masthead .role-line { animation-delay: 0.12s; }
+.masthead .stat-strip { animation-delay: 0.24s; }
+
+@keyframes rise {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .masthead h1,
+  .masthead .role-line,
+  .masthead .stat-strip {
+    animation: none;
+    opacity: 1;
+    transform: none;
+  }
+  html {
+    scroll-behavior: auto;
+  }
+}
+
+/* ---------- Responsive ---------- */
+@media (max-width: 720px) {
+  .nav-links {
+    position: fixed;
+    top: 62px;
+    left: 0;
+    right: 0;
+    background: #fff;
+    flex-direction: column;
+    padding: 18px 28px;
+    border-bottom: 1px solid var(--rule);
+    display: none;
+    gap: 16px;
+  }
+  .nav-links.open {
+    display: flex;
+  }
+  .nav-toggle {
+    display: block;
+  }
+  .research-grid {
+    grid-template-columns: 1fr;
+  }
+  .stat-strip {
+    flex-direction: column;
+  }
+  .stat {
+    border-right: none;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.15);
+    padding: 16px 0;
+  }
+  .skills-table th {
+    width: 120px;
+  }
+  .resume-cta {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}
